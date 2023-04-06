@@ -1,0 +1,292 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+ul {
+  list-style: none;
+}
+
+#grid_container {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "header header header header header header header header header header header header"
+    "nav nav nav nav nav nav nav nav nav nav nav nav"
+    "main main main main main main main main main main main main"
+    "footer footer footer footer footer footer footer footer footer footer footer footer";
+}
+
+header {
+  grid-area: header;
+  background-color: #172940;
+  color: #fff;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+}
+
+.logo-footer {
+  height: 100px;
+  width: 100px;
+  z-index: 2;
+}
+
+.logo-header {
+  height: 140px;
+  width: 150px;
+}
+
+nav {
+  grid-area: nav;
+  background-color: #314b6d;
+  padding: 1rem;
+}
+
+nav ul {
+  display: flex;
+  justify-content: space-around;
+}
+
+nav ul a {
+  text-decoration: none;
+  color: white;
+}
+
+#cart-icon {
+  grid-area: nav;
+  position: relative;
+}
+
+main {
+  grid-area: main;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+    "productos1 productos1 productos1 productos2"
+    "productos1 productos1 productos1 productos2";
+  padding: 1rem;
+}
+
+.product-list {
+  background-color: #eee;
+  padding: 1rem;
+  text-align: center;
+}
+
+#productos1 {
+  grid-area: productos1;
+}
+
+#productos2 {
+  grid-area: productos2;
+}
+.product-list h2 {
+  margin-bottom: 1rem;
+}
+
+.product-list ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.product-list li {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  text-align: center;
+}
+
+.product-list li img {
+  margin-bottom: 1rem;
+}
+
+.product-list li h3 {
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.product-list li p {
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.product-list li .price {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.product-list li button {
+  display: block;
+  margin: 1rem auto 0;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.cart {
+  background-color: #ddd;
+  padding: 1rem;
+}
+
+.cart h2 {
+  margin-bottom: 1rem;
+}
+
+.cart ul {
+  margin-bottom: 1rem;
+}
+
+.cart li {
+  margin-bottom: 1rem;
+}
+
+.cart li h3 {
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.cart li .price {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.cart li p {
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.cart .total-price {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.cart button {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+#cart-items {
+  display: none;
+}
+
+.sectionfooter {
+  grid-area: footer;
+  position: relative;
+  width: 100%;
+  background: #172940;
+  padding-top: 60px;
+}
+footer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}
+
+@media (width < 620px) {
+  footer {
+    flex-direction: column;
+  }
+
+  footer.bottom {
+    gap: 16px;
+    flex-direction: column-reverse;
+  }
+}
+
+footer > img {
+  margin-top: 10px;
+}
+
+footer {
+  margin: 0 auto;
+  max-width: 600px;
+  padding: 0;
+  color: #a2b5cd;
+}
+
+footer.top {
+  border-bottom: 2px solid #3a4f6a;
+  padding-bottom: 20px;
+}
+
+footer.bottom {
+  padding: 20px 0;
+  justify-content: space-between;
+}
+
+footer.top .links {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+}
+
+.links > div {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+footer h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+  color: #f7f7f7;
+}
+
+.legal {
+  font-size: 12px;
+}
+
+.legal > a {
+  margin: 0 4px;
+}
+
+.legal > span {
+  margin-right: 10px;
+}
+
+footer.bottom .links {
+  display: flex;
+  gap: 18px;
+}
+
+footer.bottom .links > a {
+  font-size: 24px;
+}
+
+@media (width < 420px) {
+  footer {
+    text-align: center;
+    align-items: center;
+  }
+
+  footer.top .links {
+    grid-template-columns: 1fr;
+  }
+
+  footer.bottom {
+    align-items: center;
+  }
+
+  .legal > span {
+    display: block;
+    margin-right: 0;
+    margin-bottom: 2px;
+  }
+}
