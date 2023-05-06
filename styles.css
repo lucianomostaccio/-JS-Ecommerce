@@ -8,16 +8,17 @@ ul {
   list-style: none;
 }
 
-#grid_container {
+/* #grid_container {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: auto 1fr auto;
   grid-template-areas:
     "header header header header header header header header header header header header"
     "nav nav nav nav nav nav nav nav nav nav nav nav"
-    "main main main main main main main main main main main main"
+    "productos1 productos1 productos1 productos1 productos1 productos1 productos1 productos1 productos1 productos2 productos2 productos2"
+    "carousel carousel carousel carousel carousel carousel carousel carousel carousel carousel productos2 productos2"
     "footer footer footer footer footer footer footer footer footer footer footer footer";
-}
+} */
 
 header {
   grid-area: header;
@@ -60,18 +61,19 @@ nav ul a {
 #cart-icon {
   grid-area: nav;
   position: relative;
+  text-decoration: none;
 }
 
-main {
-  grid-area: main;
+/* main {
+  /* grid-area: main;
   display: grid;
-  grid-template-columns: 3fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto 1fr auto;
   grid-template-areas:
     "productos1 productos1 productos1 productos2"
-    "productos1 productos1 productos1 productos2";
-  padding: 1rem;
-}
+    "productos3 productos3 productos3 productos2"; */
+/* padding: 1rem; */
+/* }  */
 
 .product-list {
   background-color: #eee;
@@ -289,4 +291,57 @@ footer.bottom .links > a {
     margin-right: 0;
     margin-bottom: 2px;
   }
+}
+
+#carousel {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+  margin: 0 auto;
+  grid-area: carousel;
+}
+
+.card {
+  flex: 0 0 25%;
+  height: 300px;
+  margin: 10px;
+  border: 1px solid black;
+  box-shadow: 2px 2px 5px gray;
+}
+
+.card img {
+  width: 100%;
+  height: 150px;
+}
+
+.card h3 {
+  margin: 10px;
+}
+
+.card p {
+  margin: 10px;
+}
+
+.card span {
+  margin: 10px;
+  font-weight: bold;
+}
+
+.card button {
+  margin: 10px;
+}
+
+#prev,
+#next {
+  position: absolute;
+  transform: translateY(-50%);
+  grid-area: carousel;
+}
+
+#prev {
+  left: 5%;
+}
+
+#next {
+  right: 5%;
 }
