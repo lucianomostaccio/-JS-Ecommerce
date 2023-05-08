@@ -4,6 +4,8 @@
   box-sizing: border-box;
 }
 
+
+
 ul {
   list-style: none;
 }
@@ -43,7 +45,7 @@ header {
 }
 
 nav {
-  grid-area: nav;
+  /* grid-area: nav; */
   background-color: #314b6d;
   padding: 1rem;
 }
@@ -58,8 +60,12 @@ nav ul a {
   color: white;
 }
 
+.navbar-brand{
+  display: none;
+}
+
 #cart-icon {
-  grid-area: nav;
+  /* grid-area: nav; */
   position: relative;
   text-decoration: none;
 }
@@ -118,7 +124,7 @@ nav ul a {
   font-size: 0.9rem;
 }
 
-.product-list li .price {
+.product-list li .precioProducto {
   font-weight: bold;
   font-size: 1.1rem;
 }
@@ -156,7 +162,7 @@ nav ul a {
   font-size: 1.2rem;
 }
 
-.cart li .price {
+.cart li .precioProducto {
   font-weight: bold;
   font-size: 1.1rem;
 }
@@ -195,9 +201,12 @@ nav ul a {
 footer {
   display: flex;
   align-items: flex-start;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  gap: 40px;
+  max-width: 600px;
+  padding: 0;
+  color: #a2b5cd;
+  margin: 0 auto;
 }
 
 @media (width < 620px) {
@@ -209,17 +218,19 @@ footer {
     gap: 16px;
     flex-direction: column-reverse;
   }
+
+  .navbar .navbar-expand-lg .bg-body-tertiary{
+    display: block; /*VER*/
+    position:sticky;
+  }
+
+  .navbar-brand{
+    display: block;
+  }
 }
 
 footer > img {
   margin-top: 10px;
-}
-
-footer {
-  margin: 0 auto;
-  max-width: 600px;
-  padding: 0;
-  color: #a2b5cd;
 }
 
 footer.top {
@@ -233,9 +244,11 @@ footer.bottom {
 }
 
 footer.top .links {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 30px;
+  /* display: grid;
+  grid-template-columns: repeat(2, 1fr); */
+  /* gap: 30px; */
+  display: flex;
+
 }
 
 .links > div {
@@ -291,57 +304,4 @@ footer.bottom .links > a {
     margin-right: 0;
     margin-bottom: 2px;
   }
-}
-
-#carousel {
-  display: flex;
-  overflow: hidden;
-  width: 100%;
-  margin: 0 auto;
-  grid-area: carousel;
-}
-
-.card {
-  flex: 0 0 25%;
-  height: 300px;
-  margin: 10px;
-  border: 1px solid black;
-  box-shadow: 2px 2px 5px gray;
-}
-
-.card img {
-  width: 100%;
-  height: 150px;
-}
-
-.card h3 {
-  margin: 10px;
-}
-
-.card p {
-  margin: 10px;
-}
-
-.card span {
-  margin: 10px;
-  font-weight: bold;
-}
-
-.card button {
-  margin: 10px;
-}
-
-#prev,
-#next {
-  position: absolute;
-  transform: translateY(-50%);
-  grid-area: carousel;
-}
-
-#prev {
-  left: 5%;
-}
-
-#next {
-  right: 5%;
 }

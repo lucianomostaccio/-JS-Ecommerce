@@ -1,143 +1,85 @@
-console.log("Hello world");
+const carrito = []; // crear array para almacenar productos en el carrito
 
-//cart
-// const cartIcon = document.querySelector('#cart-icon');
-// let cartOpen = false;
+// // Evento de "click" al botón
+// agregarAlCarrito.addEventListener("click", function () {
+// carrito.push(producto)})
 
-// cartIcon.addEventListener('click', function() {
-//   const cartItemsEl = document.querySelector('#cart-items');
+//todos los productos en venta - array
+const arrayProductos = {
+  articulos: [
+    {
+      nombre: "Laptop 1",
+      descripcion: "notebook dell",
+      precio: 1200.0,
+      foto: "https://unsplash.it/180/400", //LUEGO PONER FOTO DE CADA PRODUCTO
+    },
+    {
+      nombre: "Laptop 2",
+      descripcion: "notebook lenovo",
+      precio: 800.0,
+      foto: "https://unsplash.it/180/400",
+    },
+    {
+      nombre: "Laptop 3",
+      descripcion: "notebook hp",
+      precio: 400.0,
+      foto: "https://unsplash.it/180/400",
+    },
+    {
+      nombre: "Laptop 4",
+      descripcion: "notebook asus rog",
+      precio: 150.0,
+      foto: "https://unsplash.it/180/400",
+    },
+  ],
+};
 
-//   if (!cartOpen) {
-//     // Clear any existing items in the cart
-//     cartItemsEl.innerHTML = '';
+const listaProductos = document.querySelector("#ofertasProductos"); //sección donde van los articulos en el home
+const productosSeleccionadosDiv = document.querySelector("#productoEnCarrito"); //sección donde van los artículos en el carrito
 
-//     // Add each item to the cart
-//     cartItems.forEach(function(item) {
-//       const itemEl = document.createElement('div');
-//       itemEl.innerText = item.name;
-//       cartItemsEl.appendChild(itemEl);
-//     });
+//dibujar el div de los articulos para el home
+arrayProductos.articulos.forEach((articulo) => {
+  //para cada artículo dentro de articulos y dentro de arrayProductos
+  const productoDiv = document.createElement("li"); //elemento a crear
+  productoDiv.classList.add("articulo"); //clase
+  productoDiv.innerHTML = `
+            <img src="${articulo.foto}"/>
+            <h3 class="nombreProducto">${articulo.nombre}</h3> 
+            <p>${articulo.descripcion}</p>
+            <p class="precioProducto">${articulo.precio}</p>
+            <button class="botonAgregarCarrito">Agregar al carrito</button>
+  `;
+  listaProductos.appendChild(productoDiv); //agregar cada uno de los div creados en listaProductos que es la sección del home
+});
 
-//     // Show the cart
-//     cartItemsEl.style.display = 'block';
-//     cartOpen = true;
-//   } else {
-//     // Hide the cart
-//     cartItemsEl.style.display = 'none';
-//     cartOpen = false;
-//   }
-// });
-
-// Crear un arreglo con los datos de los artículos
-var articulos = [
-  {
-    nombre: "Camiseta",
-    foto: "camiseta.jpg",
-    caracteristicas: "Algodón, talla M, color azul",
-    precio: "$15",
-  },
-  {
-    nombre: "Pantalón",
-    foto: "pantalon.jpg",
-    caracteristicas: "Jean, talla L, color negro",
-    precio: "$25",
-  },
-  {
-    nombre: "Zapatos",
-    foto: "zapatos.jpg",
-    caracteristicas: "Cuero, talla 40, color marrón",
-    precio: "$35",
-  },
-  {
-    nombre: "Gorra",
-    foto: "gorra.jpg",
-    caracteristicas: "Lana, talla única, color rojo",
-    precio: "$10",
-  },
-];
-
-// Obtener los elementos del DOM
-var carousel = document.getElementById("carousel");
-var prev = document.getElementById("prev");
-var next = document.getElementById("next");
-
-// Crear una función para crear una tarjeta con los datos de un artículo
-function crearTarjeta(articulo) {
-  // Crear un elemento div con la clase card
-  var card = document.createElement("div");
-  card.className = "card";
-
-  // Crear un elemento img con la foto del artículo
-  var img = document.createElement("img");
-  img.src = articulo.foto;
-
-  // Crear un elemento h3 con el nombre del artículo
-  var h3 = document.createElement("h3");
-  h3.textContent = articulo.nombre;
-
-  // Crear un elemento p con las características del artículo
-  var p = document.createElement("p");
-  p.textContent = articulo.caracteristicas;
-
-  // Crear un elemento span con el precio del artículo
-  var span = document.createElement("span");
-  span.textContent = articulo.precio;
-
-  // Crear un elemento button con el texto Agregar al carrito
-  var button = document.createElement("button");
-  button.textContent = "Agregar al carrito";
-
-  // Agregar los elementos creados al div card
-  card.appendChild(img);
-  card.appendChild(h3);
-  card.appendChild(p);
-  card.appendChild(span);
-  card.appendChild(button);
-
-  // Devolver el div card
-  return card;
-}
-
-// Crear una variable para guardar el índice actual del carrusel
-var indice = 0;
-
-// Crear una función para agregar las tarjetas al carrusel según el índice
-function agregarTarjetas() {
-  // Limpiar el contenido del carrusel
-  carousel.innerHTML = "";
-
-  // Recorrer el arreglo de artículos desde el índice hasta el índice + 4
-  for (var i = indice; i < indice + 4; i++) {
-    // Obtener el artículo en la posición i del arreglo
-    var articulo = articulos[i];
-
-    // Si el artículo existe, crear una tarjeta con sus datos y agregarla al carrusel
-    if (articulo) {
-      var tarjeta = crearTarjeta(articulo);
-      carousel.appendChild(tarjeta);
+//agregar articulos al carrito
+document.querySelectorAll(".botonAgregarCarrito").forEach((boton, index) => {
+  //EVENTO PARA CADA BOTON "AGREGAR AL CARRITO"
+  boton.addEventListener("click", () => {
+    agregarAlCarrito(arrayProductos.articulos[index]); //función declarada debajo. index=indice del boton seleccionado según el array de todos los productos
+    function agregarAlCarrito(articulo) {
+      //se llama al hacer click en agregar al carrito
+      carrito.push(articulo); //agregar al array del carrito el producto correspondiente al que se acaba de hacer click
+      console.log(carrito);
+      actualizarProductosSeleccionados(); //función declarada debajo
     }
-  }
-}
 
-// Invocar la función agregarTarjetas para mostrar las primeras cuatro tarjetas
-agregarTarjetas();
-
-// Crear una función para mover el carrusel a la izquierda
-function moverIzquierda() {
-  // Si el índice es mayor que cero, restar uno al índice y agregar las tarjetas
-  if (indice > 0) {
-    indice--;
-    agregarTarjetas();
-  }
-}
-
-// Crear una función para mover el carrusel a la derecha
-function moverDerecha() {
-  // Si el índice es menor que la longitud del arreglo de artículos menos cuatro, sumar uno al índice y agregar las tarjetas
-  if (indice > 0) {
-    indice++;
-    agregarTarjetas();
-  }
-}
-
-prev.addEventListener("click", moverIzquierda);
+    //dibujar los articulos agregados a la página del carrito
+    function actualizarProductosSeleccionados() {
+      //se llama luego de agregar un producto al carrito
+      productosSeleccionadosDiv.innerHTML = ""; //limpiar el carrito inicial
+      carrito.forEach((producto) => {
+        //recorrer el array y crear div x cada uno
+        const productoDiv = document.createElement("div");
+        productoDiv.classList.add("producto"); //clase
+        productoDiv.innerHTML = `
+                <p>${producto.nombre}</p>
+                <h5>Precio: $${producto.precio}</h5>
+            `;
+        productosSeleccionadosDiv.appendChild(productoDiv);
+      });
+    }
+  });
+});
+//NOTA: YA PUDE HACER QUE SE DIBUJEN LOS ARTICULOS EN OFERTAS DEL HOME DINAMICAMENTE, Y QUE AL HACER CLICK EN AGREGAR AL CARRITO SE AGREGUEN AL ARRAY DEL CARRITO.
+//FALTA: SETEAR PARA QUE SE DIBUJEN EN EL CARRITO - VER LA SECCIÓN DE ABAJO DEL HOME - BOTON ELIMINAR DEL CARRITO - FORMATOS VARIOS, ELIMINAR PÁGINAS - LOCAL STORAGE - CAMBIAR LOS NOMBRES A LAS CLASES O CAMBIAR LOS METODOS PARA QUE NO SEA COPIA DEL PROFE
