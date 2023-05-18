@@ -83,113 +83,53 @@
                 type="search"
                 placeholder="Search"
                 aria-label="Search"
+                id="busqueda"
               />
-              <button class="btn btn-outline-success" type="submit">
+              <button class="btn btn-outline-success" type="submit" id="buscarBtn">
                 Search
               </button>
             </form>
             <li>
-              <a span id="cart-icon" href="/Pages/Carrito.html"
+              <a span id="cart-icon" href=""
                 >CARRITO<i class="fa-solid fa-shopping-cart"></i
               ></a>
             </li>
           </div>
         </div>
       </nav>
-      <!-- <nav>
-        <ul>
-          <li><a href="/index.html">INICIO</a></li>
-          <li class="dropdown">
-            <a href="#">CATEGORIAS <i class="fa fa-caret-down"></i></a>
-            <ul class="submenu">
-              <li><a href="#">Cat1</a></li>
-              <li><a href="#">Cat2</a></li>
-              <li><a href="#">Cat3</a></li>
-              <li><a href="#">Cat4</a></li>
-              <li><a href="#">Cat5</a></li>
-              <li><a href="#">Cat6</a></li>
-            </ul>
-          </li>
-          <li><a href="/Pages/contacto.html">CONTACTO</a></li>
-          <li> 
-            <a span id="cart-icon" href="#"
-              >CARRITO<i class="fa-solid fa-shopping-cart"></i
-            ></a>
-          </li>
-        </ul>
-      </nav> -->
       <main>
         <div id="cart-items"></div>
         <section class="product-list" id="productos1"> <!--cambiarid-->
-          <h2>OFERTAS</h2>
-          <ul id="ofertasProductos">
-            <!-- <li class="articulo">
-              <img src="https://unsplash.it/180/500" alt="Producto 1" />
-              <h3 class="nombreProducto">Producto 1</h3>
-              <p>Descripción del producto 1.</p>
-              <p class="precioProducto">$10.99</p>
-              <button class="botonAgregarCarrito">Agregar al carrito</button>
-            </li>
-            <li class="articulo">
-              <img src="https://unsplash.it/180/500" alt="Producto 2" />
-              <h3 class="nombreProducto">Producto 2</h3>
-              <p>Descripción del producto 2.</p>
-              <p class="precioProducto">$12.99</p>
-              <button class="botonAgregarCarrito">Agregar al carrito</button>
-            </li>
-            <li class="articulo">
-              <img src="https://unsplash.it/180/500" alt="Producto 3" />
-              <h3 class="nombreProducto">Producto 3</h3>
-              <p>Descripción del producto 3.</p>
-              <p class="precioProducto">$8.99</p>
-              <button class="botonAgregarCarrito">Agregar al carrito</button>
-            </li>
-            <li class="articulo">
-              <img src="https://unsplash.it/180/500" alt="Producto 4" />
-              <h3 class="nombreProducto">Producto 4</h3>
-              <p>Descripción del producto 4.</p>
-              <p class="precioProducto">$10.99</p>
-              <button class="botonAgregarCarrito">Agregar al carrito</button>
-            </li> -->
-          </ul>
-        </section>
-        <section class="product-list" id="productos2"> <!--cambiarid-->
-          <h2>NOVEDADES</h2>
-          <ul>
-            <li class="articulo">
-              <img src="https://unsplash.it/150/100" alt="Producto 5" />
-              <h3 class="nombreProducto">Producto 5</h3>
-              <p>Descripción del producto 5.</p>
-              <p class="precioProducto">$10.99</p>
-              <button class="botonAgregarCarrito">Agregar al carrito</button>
-            </li>
-            <li class="articulo">
-              <img src="https://unsplash.it/150/100" alt="Producto 6" />
-              <h3 class="nombreProducto">Producto 6</h3>
-              <p>Descripción del producto 6.</p>
-              <p class="precioProducto">$12.99</p>
-              <button class="botonAgregarCarrito">Agregar al carrito</button>
-            </li>
-            <li class="articulo">
-              <img src="https://unsplash.it/150/100" alt="Producto 7" />
-              <h3 class="nombreProducto">Producto 7</h3>
-              <p>Descripción del producto 7.</p>
-              <p class="precioProducto">$8.99</p>
-              <button class="botonAgregarCarrito">Agregar al carrito</button>
-            </li>
-            <li class="articulo">
-              <img src="https://unsplash.it/150/100" alt="Producto 8" />
-              <h3 class="nombreProducto">Producto 8</h3>
-              <p>Descripción del producto 8.</p>
-              <p class="precioProducto">$10.99</p>
-              <button class="botonAgregarCarrito">Agregar al carrito</button>
-            </li>
+          <h2>Notebooks</h2>
+          <ul id="principalProductos">
+            <!--CON JS-->
           </ul>
         </section>
         <section>
-          <article>
-           
-          </article>
+          <div id="resultados"></div>
+        </section>
+        <section class="h-100" style="background-color: #eee;">
+          <div class="container h-100 py-5">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+              <div class="col-10">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                  <h3 class="fw-normal mb-0 text-black" id="sectionCarrito">Carrito</h3>
+                  <!-- <h4 class="row d-flex justify-content-center align-items-center h-100">Su carrito está vacio. Agregue productos.</h4> -->
+                  <!-- <div>
+                    <p class="mb-0"><span class="text-muted">Sort by:</span> <a href="#!" class="text-body">price <i
+                          class="fas fa-angle-down mt-1"></i></a></p>
+                  </div> -->
+                </div>
+                <!--Inicio tarjeta carrito-->
+                <div id="articulosEnCarrito">
+                 <!-- CON JS -->
+                </div>
+                <button class="btn btn-danger" type="button" id="vaciarCart">VACIAR CARRITO</button>
+                 <div id="totalCarrito"></div>
+                <!-- fin artículos del carrito -->
+                </div>
+            </div>
+          </div>
         </section>
       </main>
       <section class="sectionfooter">

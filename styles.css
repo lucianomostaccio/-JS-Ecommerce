@@ -4,23 +4,9 @@
   box-sizing: border-box;
 }
 
-
-
 ul {
   list-style: none;
 }
-
-/* #grid_container {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: auto 1fr auto;
-  grid-template-areas:
-    "header header header header header header header header header header header header"
-    "nav nav nav nav nav nav nav nav nav nav nav nav"
-    "productos1 productos1 productos1 productos1 productos1 productos1 productos1 productos1 productos1 productos2 productos2 productos2"
-    "carousel carousel carousel carousel carousel carousel carousel carousel carousel carousel productos2 productos2"
-    "footer footer footer footer footer footer footer footer footer footer footer footer";
-} */
 
 header {
   grid-area: header;
@@ -45,7 +31,6 @@ header {
 }
 
 nav {
-  /* grid-area: nav; */
   background-color: #314b6d;
   padding: 1rem;
 }
@@ -65,21 +50,9 @@ nav ul a {
 }
 
 #cart-icon {
-  /* grid-area: nav; */
   position: relative;
   text-decoration: none;
 }
-
-/* main {
-  /* grid-area: main;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: auto 1fr auto;
-  grid-template-areas:
-    "productos1 productos1 productos1 productos2"
-    "productos3 productos3 productos3 productos2"; */
-/* padding: 1rem; */
-/* }  */
 
 .product-list {
   background-color: #eee;
@@ -87,27 +60,24 @@ nav ul a {
   text-align: center;
 }
 
-#productos1 {
-  grid-area: productos1;
-}
-
-#productos2 {
-  grid-area: productos2;
-}
 .product-list h2 {
   margin-bottom: 1rem;
 }
 
 .product-list ul {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .product-list li {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  padding: 1rem;
+  padding: 3rem;
   text-align: center;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  width: 25rem;
 }
 
 .product-list li img {
@@ -139,6 +109,7 @@ nav ul a {
   font-size: 1rem;
   cursor: pointer;
 }
+
 
 .cart {
   background-color: #ddd;
@@ -188,6 +159,10 @@ nav ul a {
 }
 
 #cart-items {
+  display: none;
+}
+
+#vaciarCart {
   display: none;
 }
 
