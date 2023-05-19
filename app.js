@@ -1,108 +1,97 @@
 const listaProductos = document.querySelector("#principalProductos"); //sección donde van los articulos en el home
 const carritoHTML = document.querySelector("#articulosEnCarrito"); //sección donde van los artículos en el carrito
 const buscar = document.querySelector("#buscarBtn"); // botón buscar
+const formBusqueda = document.querySelector("#busqueda");
 const vaciarCarrito = document.querySelector("#vaciarCart"); // boton vaciar carrito
-const carrito = []; // crear array para almacenar productos en el carrito
+const vaciarComprarDiv = document.querySelector(".vaciarComprarDiv");
+const comprarCarrito = document.querySelector("#comprarCarrito");
+let totalCarritoSuma = 0; // Inicializo variable para almacenar el total del carrito
+let carrito = []; // crear array para almacenar productos en el carrito
 
 //todos los productos en venta - array
 const arrayProductos = {
   articulos: [
     {
       id: "dell-1",
-      nombre: "Notebook Dell",
+      nombre: "Notebook Dell oficina",
       descripcion: "intel core i5, 16gb ram ddr4, ssd 512gb m2, pantalla 15.5",
       precio: 250000.0,
-      foto: "https://unsplash.it/150/100",
-      cantidad: 1, //LUEGO PONER FOTO DE CADA PRODUCTO
+      foto: "https://th.bing.com/th/id/R.d25b1a49a9fafbf23a6373e0c47e45ff?rik=VbUNfUCprHYtyQ&riu=http%3a%2f%2fi.mlcdn.com.br%2f1500x1500%2fnotebook-dell-inspiron-3000-i15-3542-a30c-intel-core-i5-4gb-1tb-windows-8.1-led-15-6-hdmi-135223000.jpg&ehk=oKyjUP30L6M9X%2bUwsnsmIsQhRMgmHNK42Q%2fP0c0of58%3d&risl=&pid=ImgRaw&r=0",
+      cantidad: 1, 
     },
     {
       id: "lenovo-1",
-      nombre: "Notebook Lenovo",
-      descripcion: "intel core i7, 16gb ram ddr4, ssd 1tb m2, pantalla 15.5",
+      nombre: "Notebook Lenovo gamer",
+      descripcion:
+        "intel core i7, 16gb ram ddr4, video 12gb, ssd 1tb m2, pantalla 15.5",
       precio: 600000.0,
-      foto: "https://unsplash.it/150/100",
+      foto: "https://th.bing.com/th/id/R.9d4cf11d97900f273009cd9d348b4144?rik=BtA19RX%2bzd8DDA&pid=ImgRaw&r=0",
       cantidad: 1,
     },
     {
       id: "hp-1",
-      nombre: "Notebook HP",
-      descripcion: "AMD rizen 3, 8gb ram ddr4, ssd 512gb m2, pantalla 14",
+      nombre: "Notebook HP basica",
+      descripcion: "AMD rizen 3, 8gb ram ddr4, ssd 256gb m2, pantalla 14",
       precio: 300000.0,
-      foto: "https://unsplash.it/150/100",
+      foto: "https://store.hp.com/CanadaStore/Html/Merch/Images/c05971638_1750x1285.jpg",
       cantidad: 1,
     },
     {
       id: "hp-2",
-      nombre: "Notebook HP",
+      nombre: "Notebook HP oficina",
       descripcion: "AMD rizen 5, 16gb ram ddr4, ssd 512gb m2, pantalla 14",
       precio: 350000.0,
-      foto: "https://unsplash.it/150/100",
+      foto: "https://store.hp.com/CanadaStore/Html/Merch/Images/c05971638_1750x1285.jpg",
       cantidad: 1,
     },
     {
       id: "dell-2",
-      nombre: "Notebook Dell Gamer",
-      descripcion:
-        "intel core i7, 32gb ram ddr4, video 12gb, ssd 1tb m2, pantalla 17",
+      nombre: "Notebook Dell gamer",
+      descripcion:"intel core i7, 32gb ram ddr4, video 12gb, ssd 1tb m2, pantalla 17",
       precio: 800000.0,
-      foto: "https://unsplash.it/150/100", //LUEGO PONER FOTO DE CADA PRODUCTO
+      foto: "https://th.bing.com/th/id/R.acbdd69b5caed96b52a37352861fb99b?rik=7Q2TK%2bzXFYGoHw&pid=ImgRaw&r=0", 
       cantidad: 1,
     },
     {
       id: "lenovo-2",
-      nombre: "Notebook Lenovo",
+      nombre: "Notebook Lenovo básica",
       descripcion: "intel core i3, 16gb ram ddr4, ssd 256 m2, pantalla 14",
       precio: 300000.0,
-      foto: "https://unsplash.it/150/100",
+      foto: "https://th.bing.com/th/id/R.fa2670eadf67a928429c276d5be1d4b7?rik=2IHEEO9s66VzBQ&pid=ImgRaw&r=0",
       cantidad: 1,
     },
     {
       id: "hp-3",
-      nombre: "Notebook HP",
-      descripcion: "AMD rizen 7, 32gb ram ddr4, ssd 512gb m2, pantalla 15",
+      nombre: "Notebook HP gamer",
+      descripcion:
+        "AMD rizen 7, 32gb ram ddr4, video 8gb, ssd 512gb m2, pantalla 15",
       precio: 500000.0,
-      foto: "https://unsplash.it/150/100",
+      foto: "https://th.bing.com/th/id/OIP.684NQNblvIajTSKMQtxlWgHaFK?pid=ImgDet&rs=1",
       cantidad: 1,
     },
     {
       id: "asus-1",
-      nombre: "Notebook Asus Rog",
+      nombre: "Notebook Asus gamer",
       descripcion:
         "AMD rizen 7, 32gb ram ddr4, video 12gb, ssd 1tb m2, pantalla 17",
       precio: 900000.0,
-      foto: "https://unsplash.it/150/100",
-      cantidad: 1,
-    },
-    {
-      id: "dell-3",
-      nombre: "Notebook Dell",
-      descripcion: "AMD rizen 5, 16gb ram ddr4, ssd 512gb m2, pantalla 15",
-      precio: 400000.0,
-      foto: "https://unsplash.it/150/100", //LUEGO PONER FOTO DE CADA PRODUCTO
+      foto: "https://th.bing.com/th/id/OIP.-SrTYrvYX2FztybvXAbgWwHaFj?pid=ImgDet&rs=1",
       cantidad: 1,
     },
     {
       id: "lenovo-3",
-      nombre: "Notebook Lenovo",
-      descripcion: "AMD rizen 3, 16gb ram ddr4, ssd 512gb m2, pantalla 14",
+      nombre: "Notebook Lenovo oficina",
+      descripcion: "AMD rizen 5, 16gb ram ddr4, ssd 512gb m2, pantalla 14",
       precio: 350000.0,
-      foto: "https://unsplash.it/150/100",
-      cantidad: 1,
-    },
-    {
-      id: "hp-4",
-      nombre: "Notebook HP",
-      descripcion: "intel core i3, 16gb ram ddr4, ssd 256 m2, pantalla 14",
-      precio: 350000.0,
-      foto: "https://unsplash.it/150/100",
+      foto: "https://th.bing.com/th/id/R.fa2670eadf67a928429c276d5be1d4b7?rik=2IHEEO9s66VzBQ&pid=ImgRaw&r=0",
       cantidad: 1,
     },
     {
       id: "asus-2",
-      nombre: "Notebook Asus",
+      nombre: "Notebook Asus oficina",
       descripcion: "intel core i5, 32gb ram ddr4, ssd 512 m2, pantalla 15",
       precio: 450000.0,
-      foto: "https://unsplash.it/150/100",
+      foto: "https://th.bing.com/th/id/R.bf214b856a9c0a6bdd6a8607f13bd7b9?rik=whhJp1uhysp5tg&riu=http%3a%2f%2fwww.bhphotovideo.com%2fimages%2fimages2000x2000%2fasus_1225b_su17_bk_eee_1225b_su17_bk_11_6_netbook_844671.jpg&ehk=RJ0fD8clIQoN2HDMfUZdy%2fRh90jiNeu46lwLNBVJdxU%3d&risl=&pid=ImgRaw&r=0",
       cantidad: 1,
     },
   ],
@@ -112,7 +101,6 @@ const arrayProductos = {
 arrayProductos.articulos.forEach((articulo) => {
   //para cada artículo dentro de articulos y dentro de arrayProductos
   const articuloHTML = document.createElement("li"); //elemento a crear
-  // articuloHTML.classList.add("articulo"); //clase
   articuloHTML.innerHTML = `
             <img src="${articulo.foto}"/>
             <h3 class="nombreProducto">${articulo.nombre}</h3> 
@@ -123,94 +111,59 @@ arrayProductos.articulos.forEach((articulo) => {
   listaProductos.appendChild(articuloHTML); //agregar cada uno de los div creados en listaProductos que es la sección del home
 });
 
-//inicio codigo busqueda
-
+//CODIGO DE BUSQUEDA
 buscar.addEventListener("click", function (e) {
   e.preventDefault();
 
-  const buscar = document.querySelector("#busqueda");
-  const productoBuscado = buscar.value.toLowerCase();
+  const palabraClave = formBusqueda.value.toString();
+  console.log(palabraClave);
 
-  const resultados = arrayProductos.articulos.filter(function (articulo) {
-    return (
-      articulo.nombre.includes(productoBuscado) ||
-      articulo.descripcion.includes(productoBuscado)
-    );
+  // Filtrar articulos que coinciden con la palabra clave
+  const articulosCoincidentes = arrayProductos.articulos.filter(function (
+    articulo
+  ) {
+    const articulos = Object.values(articulo);
+    return articulos.some(function (valor) {
+      return valor.toString().includes(palabraClave);
+    });
   });
-
-  // if (resultados.length > 0) {
-  //   console.log(resultados);
-  // } else {
-  //   console.log(`No se encontraron resultados de ${productoBuscado}`);
-  // }
+  console.log(articulosCoincidentes);
 
   // Mostrar los resultados en la página HTML
   const divResultados = document.querySelector("#resultados");
-  if (resultados.length === 0) {
-    divResultados.innerHTML =
-      "No se encontraron productos para la palabra clave: " + valorBusqueda;
+  if (articulosCoincidentes.length === 0) {
+    divResultados.innerHTML = "No se encontraron productos";
   } else {
     let resultadosHTML = "";
-    resultados.forEach(function (articulo) {
+    articulosCoincidentes.forEach(function (articulo) {
       resultadosHTML += `
-      <img src="${articulo.foto}"/>
-      <h3 class="nombreProducto">${articulo.nombre}</h3> 
-      <p>${articulo.descripcion}</p>
-      <p class="precioProducto">$${articulo.precio}</p>
-      <button class="botonAgregarCarrito">Agregar al carrito</button>
+      <div class="containerResultado"
+        <img src="${articulo.foto}"/>
+        <br>
+        <h3 class="nombreProducto">${articulo.nombre}</h3> 
+        <br>
+        <p>${articulo.descripcion}</p>
+        <br>
+        <p class="precioProducto">$${articulo.precio}</p>
+        <button class="botonAgregarCarrito">Agregar al carrito</button>
+        <br>
+        <br>
+      </div>
 `;
     });
+
     divResultados.innerHTML = resultadosHTML;
+
+    // Mostrar resultados en la consola
+    console.table(articulosCoincidentes);
   }
 });
-
-// Función de búsqueda
-// function buscar() {
-//   // Obtener el valor introducido por el usuario
-//   const valorBusqueda = document.getElementById('busqueda').value.addEventListener('submit', function(event) {
-//     event.preventDefault();
-
-//   // Filtrar el array para obtener los elementos que contengan la palabra clave
-//   const resultados = arrayProductos.articulos.filter(function(articulo) {
-//     return articulo.descripcion.includes(valorBusqueda);
-//   });
-//   console.log(resultados)
-
-//   // Mostrar los resultados en la página HTML
-//   const divResultados = document.getElementById('resultados');
-//   if (resultados.length === 0) {
-//     divResultados.innerHTML = 'No se encontraron resultados para la palabra clave: ' + valorBusqueda;
-//   } else {
-//     let resultadosHTML = '';
-//     resultados.forEach(function(articulo, indice) {
-//       resultadosHTML += '<p>Se encontró la palabra clave en el índice ' + indice + ': ' + articulo + '</p>';
-//     });
-//     divResultados.innerHTML = resultadosHTML;
-//   }
-// })};
-
-// const buscarBtn = document.querySelector("#buscarBtn");
-// buscarBtn.addEventListener("click", function () {
-//   const palabraClave = document.querySelector("input[type=search]");
-
-//   // Filtrar préstamos que coinciden con la palabra clave
-//   const resultados = arrayProductos.articulos.filter(function (
-//     articulo
-//   ) {
-//     const articulosEncontrados = Object.values(articulo);
-//     return articulosEncontrados.some(function (valor) {
-//       return valor
-//         .toString()
-//         .includes(palabraClave);
-//     });
-//   });
-
-//fin codigo
 
 //agregar articulos al carrito
 document.querySelectorAll(".botonAgregarCarrito").forEach((boton, index) => {
   // EVENTO PARA CADA BOTON "AGREGAR AL CARRITO"
   boton.addEventListener("click", () => {
+    swal("Listo!", "Producto agregado al carrito", "success");
     agregarAlCarrito(arrayProductos.articulos[index]); // función declarada debajo. index=indice del boton seleccionado según el array de todos los productos
   });
 
@@ -232,9 +185,30 @@ document.querySelectorAll(".botonAgregarCarrito").forEach((boton, index) => {
   }
 });
 
+// Función para guardar el carrito en el localStorage
+function guardarCarritoEnLocalStorage() {
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+  console.log("Carrito guardado en localStorage:", carrito);
+}
+
+const carritoGuardado = localStorage.getItem("carrito");
+// Función para cargar el carrito desde el localStorage
+function cargarCarritoDesdeLocalStorage() {
+  if (carritoGuardado !== null) {
+    carrito = JSON.parse(carritoGuardado);
+    console.log("Carrito cargado desde localStorage:", carrito);
+  }
+}
+
 // Función para renderizar los productos en el carrito en el HTML
 function renderizarCarrito() {
   carritoHTML.innerHTML = ""; //limpiar el carrito inicial en el HTML
+
+  // Calcular el total del carrito
+  totalCarritoSuma = carrito.reduce((acumulador, producto) => {
+    return acumulador + producto.precio * producto.cantidad;
+  }, 0);
+
   carrito.forEach((articulo) => {
     //recorrer el array y crear div x cada uno
     let totalArticulo = articulo.precio * articulo.cantidad; //calculo precio x cantidad por cada artículo en el carrito
@@ -249,21 +223,12 @@ function renderizarCarrito() {
                   <img src="${articulo.foto}" class="img-fluid rounded-3" alt="Cotton T-shirt">
                 </div>
                 <div class="col-md-3 col-lg-3 col-xl-3">
-                  <p class="lead fw-normal mb-2">${articulo.nombre}</p>
+                  <p id="nombreArticulo" class="lead fw-normal mb-2">${articulo.nombre}</p>
+                  <p class="lead fw-normal mb-2">${articulo.descripcion}</p>
                 </div>
                 <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                <button class="btn btn-link px-2"
-                  onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                  <i class="fas fa-minus"></i>
-                </button>
-
-                <h5 class="mb-0">${articulo.cantidad}</h5>
-
-                <button class="btn btn-link px-2"
-                  onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                  <i class="fas fa-plus"></i>
-                </button>
-              </div>  
+                  <h5 class="mb-0">Cantidad: ${articulo.cantidad}</h5>
+                </div>  
                 <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
                   <h5 class="mb-0">$${totalArticulo}</h5>
                 </div>
@@ -276,73 +241,41 @@ function renderizarCarrito() {
     carritoHTML.appendChild(renderCarrito);
   });
 
-  //VER FUNCION SUMAR TOTAL DEL CARRITO////////////////////////////////////
-  let totalCarritoSuma = carrito.reduce((acumulador, producto) => {
-    return acumulador + producto.totalArticulo;
-  }, 0);
   vaciarCarrito.style.display = "block";
+  // Actualizar el total del carrito en el HTML
   const totalCarrito = document.createElement("div");
-  totalCarrito.classList.add("col-md-1");
-  totalCarrito.classList.add("col-lg-1");
-  totalCarrito.classList.add("col-xl-1");
-  totalCarrito.classList.add("text-end");
+  totalCarrito.classList.add("card");
+  totalCarrito.classList.add("rounded-3");
+  totalCarrito.classList.add("mb-4");
+  totalCarrito.classList.add("card-body");
   totalCarrito.innerHTML = `
-  <h5 class="mb-0">TOTAL CARRITO = $${totalCarritoSuma}
+  <h5 id="totalCarrito" class="mb-0">TOTAL CARRITO $${totalCarritoSuma}
   `;
   carritoHTML.appendChild(totalCarrito);
-}
+  guardarCarritoEnLocalStorage();
+} //Fin renderizar carrito
+
+// EVENTO PARA CADA BOTON "AGREGAR AL CARRITO"
+comprarCarrito.addEventListener("click", () => {
+  swal("Compra procesada", "Muchas gracias por elegirnos", "success");
+  carrito.length=0;
+  console.log(carrito);
+  localStorage.removeItem("carrito");
+  carritoHTML.innerHTML = "";
+});
+
 //evento botón vaciar el carrito
 vaciarCarrito.addEventListener("click", function () {
   // Vaciar el array "carrito"
-  // carrito = [];
   carrito.splice(0, carrito.length);
-  console.log(carrito);
+  localStorage.removeItem("carrito");
   // Actualizar el contenido del div "articulosEnCarrito"
   carritoHTML.innerHTML = "";
-  vaciarCarrito.style.display = "none";
 });
 
-//VER BOTON SUBIR BAJAR CANTIDAD DE X ARTICULO EN EL CARRITO, DE ULTIMA SACARLO
-//Y VER LOCAL Y SESSION STORAGE
-
-//NO FUNCIONA:///////////////////////////////////////////////////////////////
-// //evento para eliminar artículo del carrito con el cesto de basura
-document.querySelectorAll(".eliminarArticulo").forEach((boton) => {
-  boton.addEventListener("click", (e) => {
-    const productoId = e.target.id; // Obtener el ID del producto a eliminar del atributo "id" del botón
-    eliminarDelCarrito(productoId);
-  });
-});
-
-function eliminarDelCarrito(productoId) {
-  carrito = carrito.filter((item) => item.id !== productoId); // Filtrar el carrito y mantener solo los productos con ID diferente al producto a eliminar
-  console.log(carrito);
+// Cargar el carrito desde el localStorage al cargar la página
+window.addEventListener("DOMContentLoaded", () => {
+  console.log("DOMContentLoaded");
+  cargarCarritoDesdeLocalStorage();
   renderizarCarrito();
-}
-
-//     // Actualizar la interfaz de usuario para reflejar el cambio en el carrito
-//     renderizarCarrito();
-//   });
-// });
-
-//Eliminar un artículo del carrito
-// const eliminarArticulo = document.querySelectorAll(".eliminarArticulo");
-
-// eliminarArticulo.forEach((boton) => {
-//   boton.addEventListener("click", function() {
-//     // Obtener el ID del artículo
-//     const idArticulo = this.dataset.id;
-
-//     // Eliminar el artículo del carrito
-//     carrito.splice(carrito.indexOf(idArticulo), 1);
-
-//     // Actualizar el contenido del div "articulosEnCarrito"
-//     carritoHTML.innerHTML = "";
-//     renderizarCarrito();
-//   });
-// });
-
-//FALTA: VER LA SECCIÓN DE ABAJO DEL HOME - BOTON ELIMINAR DEL CARRITO - FORMATOS VARIOS, ELIMINAR PÁGINAS - LOCAL/SESSION STORAGE - CAMBIAR LOS METODOS PARA QUE NO SEA COPIA DEL PROFE
-//FALTA TAMBIEN: QUE AL HACER CLICK EN CESTO BASURA SE BORRE EL ITEM DEL CARRITO (ARRAY Y POR CONSIGUIENTE DIBUJO EN PAGINA)
-
-//nota2: ya se muestran en el carrito, agregar boton limpiar carrito, hacer funcionar el elimnar un articulo del carrito, y sumar cantidad al hacer click agregar al carrito. Linkear los articulos novedades idem arriba. Local/session storage. que verifique si ya está el articulo en el array, ver consulta en chatgpt
+});

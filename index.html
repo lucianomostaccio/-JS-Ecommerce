@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Notebooks store</title>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script
       src="https://kit.fontawesome.com/bc5c449022.js"
       crossorigin="anonymous"
@@ -49,9 +50,9 @@
                 <a class="nav-link active" aria-current="page" href="#">Inicio</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Promociones</a>
+                <a class="nav-link disabled" href="#">Promociones</a>
               </li>
-              <li class="nav-item dropdown">
+              <!-- <li class="nav-item dropdown">
                 <a
                   class="nav-link dropdown-toggle"
                   href="#"
@@ -68,13 +69,13 @@
                   <li>
                     <a class="dropdown-item" href="#">Something else here</a>
                   </li>
-                </ul>
+                </ul> -->
               </li>
               <li class="nav-item">
-                <a class="nav-link">Contacto</a>
+                <a class="nav-link disabled">Contacto</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link">Mi perfil</a>
+                <a class="nav-link disabled">Mi perfil</a>
               </li>
             </ul>
             <form class="d-flex" role="search">
@@ -90,7 +91,7 @@
               </button>
             </form>
             <li>
-              <a span id="cart-icon" href=""
+              <a span id="cart-icon" href="#sectionCarrito"
                 >CARRITO<i class="fa-solid fa-shopping-cart"></i
               ></a>
             </li>
@@ -98,15 +99,12 @@
         </div>
       </nav>
       <main>
-        <div id="cart-items"></div>
-        <section class="product-list" id="productos1"> <!--cambiarid-->
+        <section class="product-list" id="productos1"> 
+          <div id="resultados"></div>
           <h2>Notebooks</h2>
           <ul id="principalProductos">
             <!--CON JS-->
           </ul>
-        </section>
-        <section>
-          <div id="resultados"></div>
         </section>
         <section class="h-100" style="background-color: #eee;">
           <div class="container h-100 py-5">
@@ -114,7 +112,6 @@
               <div class="col-10">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                   <h3 class="fw-normal mb-0 text-black" id="sectionCarrito">Carrito</h3>
-                  <!-- <h4 class="row d-flex justify-content-center align-items-center h-100">Su carrito está vacio. Agregue productos.</h4> -->
                   <!-- <div>
                     <p class="mb-0"><span class="text-muted">Sort by:</span> <a href="#!" class="text-body">price <i
                           class="fas fa-angle-down mt-1"></i></a></p>
@@ -124,15 +121,19 @@
                 <div id="articulosEnCarrito">
                  <!-- CON JS -->
                 </div>
-                <button class="btn btn-danger" type="button" id="vaciarCart">VACIAR CARRITO</button>
-                 <div id="totalCarrito"></div>
+                <div class="vaciarComprarDiv">
+                  <button class="btn btn-danger" type="button" id="vaciarCart">VACIAR CARRITO</button>
+                  <button class="btn btn-success" type="button" id="comprarCarrito">COMPRAR</button>
+                </div> 
+                <div id="totalCarrito"></div>
                 <!-- fin artículos del carrito -->
                 </div>
+                
             </div>
           </div>
         </section>
       </main>
-      <section class="sectionfooter">
+      <section class="sectionfooter text">
         <footer class="top">
           <img class="logo-footer" src="/Images/PC_Market-logos.jpeg" />
           <div class="links">
