@@ -17,7 +17,7 @@ const arrayProductos = {
       descripcion: "intel core i5, 16gb ram ddr4, ssd 512gb m2, pantalla 15.5",
       precio: 250000.0,
       foto: "https://th.bing.com/th/id/R.d25b1a49a9fafbf23a6373e0c47e45ff?rik=VbUNfUCprHYtyQ&riu=http%3a%2f%2fi.mlcdn.com.br%2f1500x1500%2fnotebook-dell-inspiron-3000-i15-3542-a30c-intel-core-i5-4gb-1tb-windows-8.1-led-15-6-hdmi-135223000.jpg&ehk=oKyjUP30L6M9X%2bUwsnsmIsQhRMgmHNK42Q%2fP0c0of58%3d&risl=&pid=ImgRaw&r=0",
-      cantidad: 1, 
+      cantidad: 1,
     },
     {
       id: "lenovo-1",
@@ -47,9 +47,10 @@ const arrayProductos = {
     {
       id: "dell-2",
       nombre: "Notebook Dell gamer",
-      descripcion:"intel core i7, 32gb ram ddr4, video 12gb, ssd 1tb m2, pantalla 17",
+      descripcion:
+        "intel core i7, 32gb ram ddr4, video 12gb, ssd 1tb m2, pantalla 17",
       precio: 800000.0,
-      foto: "https://th.bing.com/th/id/R.acbdd69b5caed96b52a37352861fb99b?rik=7Q2TK%2bzXFYGoHw&pid=ImgRaw&r=0", 
+      foto: "https://th.bing.com/th/id/R.acbdd69b5caed96b52a37352861fb99b?rik=7Q2TK%2bzXFYGoHw&pid=ImgRaw&r=0",
       cantidad: 1,
     },
     {
@@ -109,54 +110,6 @@ arrayProductos.articulos.forEach((articulo) => {
             <button id="${articulo.id}" class="botonAgregarCarrito">Agregar al carrito</button>
   `;
   listaProductos.appendChild(articuloHTML); //agregar cada uno de los div creados en listaProductos que es la sección del home
-});
-
-//CODIGO DE BUSQUEDA
-buscar.addEventListener("click", function (e) {
-  e.preventDefault();
-
-  const palabraClave = formBusqueda.value.toString();
-  console.log(palabraClave);
-
-  // Filtrar articulos que coinciden con la palabra clave
-  const articulosCoincidentes = arrayProductos.articulos.filter(function (
-    articulo
-  ) {
-    const articulos = Object.values(articulo);
-    return articulos.some(function (valor) {
-      return valor.toString().includes(palabraClave);
-    });
-  });
-  console.log(articulosCoincidentes);
-
-  // Mostrar los resultados en la página HTML
-  const divResultados = document.querySelector("#resultados");
-  if (articulosCoincidentes.length === 0) {
-    divResultados.innerHTML = "No se encontraron productos";
-  } else {
-    let resultadosHTML = "";
-    articulosCoincidentes.forEach(function (articulo) {
-      resultadosHTML += `
-      <div class="containerResultado"
-        <img src="${articulo.foto}"/>
-        <br>
-        <h3 class="nombreProducto">${articulo.nombre}</h3> 
-        <br>
-        <p>${articulo.descripcion}</p>
-        <br>
-        <p class="precioProducto">$${articulo.precio}</p>
-        <button class="botonAgregarCarrito">Agregar al carrito</button>
-        <br>
-        <br>
-      </div>
-`;
-    });
-
-    divResultados.innerHTML = resultadosHTML;
-
-    // Mostrar resultados en la consola
-    console.table(articulosCoincidentes);
-  }
 });
 
 //agregar articulos al carrito
@@ -255,13 +208,61 @@ function renderizarCarrito() {
   guardarCarritoEnLocalStorage();
 } //Fin renderizar carrito
 
-// EVENTO PARA CADA BOTON "AGREGAR AL CARRITO"
+// EVENTO PARA BOTON COMPRAR CARRITO"
 comprarCarrito.addEventListener("click", () => {
   swal("Compra procesada", "Muchas gracias por elegirnos", "success");
-  carrito.length=0;
+  carrito.length = 0;
   console.log(carrito);
   localStorage.removeItem("carrito");
   carritoHTML.innerHTML = "";
+});
+
+//CODIGO DE BUSQUEDA
+buscar.addEventListener("click", function (e) {
+  e.preventDefault();
+
+  const palabraClave = formBusqueda.value.toString();
+  console.log(palabraClave);
+
+  // Filtrar articulos que coinciden con la palabra clave
+  const articulosCoincidentes = arrayProductos.articulos.filter(function (
+    articulo
+  ) {
+    const articulos = Object.values(articulo);
+    return articulos.some(function (valor) {
+      return valor.toString().includes(palabraClave);
+    });
+  });
+  console.log(articulosCoincidentes);
+
+  // Mostrar los resultados en la página HTML
+  const divResultados = document.querySelector("#resultados");
+  if (articulosCoincidentes.length === 0) {
+    divResultados.innerHTML = "No se encontraron productos";
+  } else {
+    let resultadosHTML = "";
+    articulosCoincidentes.forEach(function (articulo) {
+      resultadosHTML += `
+      <div class="containerResultado">
+        <img src="${articulo.foto}"/>
+        <br>
+        <h3 class="nombreProducto">${articulo.nombre}</h3> 
+        <br>
+        <p>${articulo.descripcion}</p>
+        <br>
+        <p class="precioProducto">$${articulo.precio}</p>
+        <button id="${articulo.id}" class="botonAgregarCarrito">Agregar al carrito</button>
+        <br>
+        <br>
+      </div>
+      `;
+    });
+
+    divResultados.innerHTML = resultadosHTML;
+
+    // Mostrar resultados en la consola
+    console.table(articulosCoincidentes);
+  }
 });
 
 //evento botón vaciar el carrito

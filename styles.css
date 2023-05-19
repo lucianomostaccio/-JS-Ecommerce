@@ -121,25 +121,30 @@ nav ul a {
 }
 
 #resultados img{
-  width: 250px;
-  height: 300px;
+  width: 150px;
+  height: 100px;
 }
 
 #resultados .botonAgregarCarrito{
   display: block;
-    margin: 1rem auto 0;
-    background-color: #333;
-    color: #fff;
-    border: none;
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    cursor: pointer;
+  margin: 1rem auto 0;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
 }
 
 .containerResultado{
-  border: solid #172940 4px;
-  width: 100vw;
-  max-height: 20rem;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 3rem;
+  text-align: center;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  border: solid blue 1px;
+  max-width: 70vw;
 }
 
 .cart {
