@@ -116,7 +116,20 @@ arrayProductos.articulos.forEach((articulo) => {
 document.querySelectorAll(".botonAgregarCarrito").forEach((boton, index) => {
   // EVENTO PARA CADA BOTON "AGREGAR AL CARRITO"
   boton.addEventListener("click", () => {
-    swal("Listo!", "Producto agregado al carrito", "success");
+    Toastify({
+      text: "Producto agregado al carrito",
+      duration: 3000,
+      destination: "#articulosEnCarrito",
+      newWindow: false,
+      close: true,
+      gravity: "top", // `top` or `bottom`
+      position: "right", // `left`, `center` or `right`
+      stopOnFocus: true, // Prevents dismissing of toast on hover
+      style: {
+        background: "linear-gradient(to right, #00b09b, #172940)",
+      },
+      onClick: function () {}, // Callback after click
+    }).showToast();
     agregarAlCarrito(arrayProductos.articulos[index]); // función declarada debajo. index=indice del boton seleccionado según el array de todos los productos
   });
 
@@ -185,8 +198,8 @@ function renderizarCarrito() {
                 <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
                   <h5 class="mb-0">$${totalArticulo}</h5>
                 </div>
-                <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                  <a class="eliminarArticulo" id="${articulo.id}" href="#!" class="text-danger"><i class="fas fa-trash fa-lg"></i><a>
+                <div class="col-md-1 col-lg-2 col-xl-2 text-end">
+                  <button class="btn btn-danger quitar" id="${articulo.id}">Eliminar</button>
                 </div>
               </div>
             </div>
@@ -210,11 +223,19 @@ function renderizarCarrito() {
 
 // EVENTO PARA BOTON COMPRAR CARRITO"
 comprarCarrito.addEventListener("click", () => {
-  swal("Compra procesada", "Muchas gracias por elegirnos", "success");
-  carrito.length = 0;
-  console.log(carrito);
-  localStorage.removeItem("carrito");
-  carritoHTML.innerHTML = "";
+  if (carrito.length === 0) {
+    swal(
+      "El carrito no tiene nada",
+      "Añade productos al carrito para poder comprar",
+      "warning"
+    );
+  } else {
+    swal("Compra procesada", "Muchas gracias por elegirnos", "success");
+    carrito.length = 0;
+    console.log(carrito);
+    localStorage.removeItem("carrito");
+    carritoHTML.innerHTML = "";
+  }
 });
 
 //CODIGO DE BUSQUEDA
@@ -267,11 +288,16 @@ buscar.addEventListener("click", function (e) {
 
 //evento botón vaciar el carrito
 vaciarCarrito.addEventListener("click", function () {
-  // Vaciar el array "carrito"
-  carrito.splice(0, carrito.length);
-  localStorage.removeItem("carrito");
-  // Actualizar el contenido del div "articulosEnCarrito"
-  carritoHTML.innerHTML = "";
+  if (carrito.length === 0) {
+    swal("Su carrito aún no tiene nada", "Añade productos", "warning");
+  } else {
+    // Vaciar el array "carrito"
+    carrito.splice(0, carrito.length);
+    localStorage.removeItem("carrito");
+    // Actualizar el contenido del div "articulosEnCarrito"
+    swal("Carrito vaciado", "Vuelve a añadir productos", "warning");
+    carritoHTML.innerHTML = "";
+  }
 });
 
 // Cargar el carrito desde el localStorage al cargar la página
@@ -280,3 +306,45 @@ window.addEventListener("DOMContentLoaded", () => {
   cargarCarritoDesdeLocalStorage();
   renderizarCarrito();
 });
+
+// //elimina articulos del carrito
+// document.querySelectorAll(".eliminarArticulo").forEach((a, index) => {
+//   // EVENTO PARA CADA BOTON "AGREGAR AL CARRITO"
+//   a.addEventListener("click", (event) => {
+//     event.preventDefault(), borrarDelCarrito(arrayProductos.articulos[index]); // función declarada debajo. index=indice del boton seleccionado según el array de todos los productos
+//   });
+
+//   function borrarDelCarrito(articulo) {
+//     // se llama al hacer click en agregar al carrito
+//     if (carrito.some((item) => item.id === articulo.id)) {
+//       // Verificar si el artículo ya existe en el carrito
+//       carrito.forEach((item) => {
+//         if (item.id === articulo.id) {
+//           item.cantidad--; // Disminuye la cantidad si el artículo ya existe
+//         }
+//       });
+//     } else {
+//       carrito.splice(articulo); // borrar del array del carrito el producto correspondiente al que se acaba de hacer click
+//     }
+
+//     console.log(carrito); //testing purposes
+//     renderizarCarrito();
+//   }
+// });
+
+
+
+carritoHTML.addEventListener("click", eliminarProducto);
+
+// Eliminar productos del carrito
+
+function eliminarProducto(e) {
+  if (e.target.classList.contains("btn-danger")) {
+    let articuloID = e.target.getAttribute("id");
+    carrito = carrito.filter(
+      (articulo) => articulo.id !== articuloID
+    );
+    console.log(carrito); //testing purposes
+    renderizarCarrito();
+  }
+}

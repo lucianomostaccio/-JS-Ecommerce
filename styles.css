@@ -255,6 +255,11 @@ footer {
   }
 }
 
+.quitar{
+  width: 7rem;
+}
+
+
 footer > img {
   margin-top: 10px;
 }
