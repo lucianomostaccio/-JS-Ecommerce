@@ -112,20 +112,21 @@ nav ul a {
   cursor: pointer;
 }
 
-#resultados{
+#resultados {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   flex-direction: row;
   align-items: center;
   max-width: 100%;
 }
 
-#resultados img{
+#resultados img {
   width: 150px;
   height: 100px;
 }
 
-#resultados .botonAgregarCarrito{
+#resultados .botonAgregarCarrito {
   display: block;
   margin: 1rem auto 0;
   background-color: #333;
@@ -136,7 +137,7 @@ nav ul a {
   cursor: pointer;
 }
 
-.containerResultado{
+.containerResultado {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   padding: 3rem;
@@ -144,7 +145,8 @@ nav ul a {
   margin-right: 1rem;
   margin-bottom: 1rem;
   border: solid blue 1px;
-  max-width: 70vw;
+  max-width: 26rem;
+  max-height: 30rem;
 }
 
 .cart {
@@ -203,10 +205,9 @@ nav ul a {
 }
 
 #totalCarrito {
-  text-align:center;
-  color:red;
+  text-align: center;
+  color: red;
 }
-
 
 #comprarCarrito {
   min-width: 20vw;
@@ -235,6 +236,12 @@ footer {
   margin: 0 auto;
 }
 
+@media (width < 992px) {
+  .carritoNav {
+    list-style: none;
+  }
+}
+
 @media (width < 620px) {
   footer {
     flex-direction: column;
@@ -245,20 +252,14 @@ footer {
     flex-direction: column-reverse;
   }
 
-  .navbar .navbar-expand-lg .bg-body-tertiary {
-    display: block; /*VER*/
-    position: sticky;
-  }
-
   .navbar-brand {
     display: block;
   }
 }
 
-.quitar{
+.quitar {
   width: 7rem;
 }
-
 
 footer > img {
   margin-top: 10px;

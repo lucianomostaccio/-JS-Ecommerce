@@ -24,7 +24,7 @@
         <h1 class="titulo_tienda"></h1>
       </header>
       <nav
-        class="navbar navbar-expand-lg bg-body-tertiary"
+        class="navbar navbar-expand-lg bg-body-tertiary position-sticky w-100 top-0 z-3"
         data-bs-theme="dark"
       >
         <div class="container-fluid">
@@ -48,25 +48,6 @@
               <li class="nav-item">
                 <a class="nav-link disabled" href="#">Promociones</a>
               </li>
-              <!-- <li class="nav-item dropdown">
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Categorías
-                </a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><hr class="dropdown-divider" /></li>
-                  <li>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                  </li>
-                </ul> -->
-              </li>
               <li class="nav-item">
                 <a class="nav-link disabled">Contacto</a>
               </li>
@@ -86,10 +67,11 @@
                 Search
               </button>
             </form>
-            <li>
+            <li class="carritoNav">
               <a span id="cart-icon" href="#sectionCarrito"
-                >CARRITO<i class="fa-solid fa-shopping-cart"></i
-              ></a>
+                >CARRITO<i class="fa-solid fa-shopping-cart"></i>
+                  <i class="fa-solid" id="cantidadCarrito"></i>
+              </a>
             </li>
           </div>
         </div>
@@ -108,10 +90,6 @@
               <div class="col-10">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                   <h3 class="fw-normal mb-0 text-black" id="sectionCarrito">Carrito</h3>
-                  <!-- <div>
-                    <p class="mb-0"><span class="text-muted">Sort by:</span> <a href="#!" class="text-body">price <i
-                          class="fas fa-angle-down mt-1"></i></a></p>
-                  </div> -->
                 </div>
                 <!--Inicio tarjeta carrito-->
                 <div id="articulosEnCarrito">
@@ -133,17 +111,6 @@
         <footer class="top">
           <img class="logo-footer" src="/Images/PC_Market-logos.jpeg" />
           <div class="links">
-            <!-- <div>
-              <h2>Categorías</h2>
-              <a>PCs armadas</a>
-              <a>Procesadores</a>
-              <a>Placas de video</a>
-              <a>Memorias RAM</a>
-              <a>Almacenamiento</a>
-              <a>Monitores</a>
-              <a>Fuentes</a>
-              <a>Gabinetes y periféricos</a>
-            </div> -->
             <div>
               <h2>Sitio web</h2>
               <a>Registrarse</a>

@@ -6,7 +6,9 @@ const vaciarCarrito = document.querySelector("#vaciarCart"); // boton vaciar car
 const vaciarComprarDiv = document.querySelector(".vaciarComprarDiv");
 const comprarCarrito = document.querySelector("#comprarCarrito");
 let totalCarritoSuma = 0; // Inicializo variable para almacenar el total del carrito
-let carrito = []; // crear array para almacenar productos en el carrito
+const numeroCantidadCarrito = document.querySelector("#cantidadCarrito");
+let carrito = []; // array para almacenar productos en el carrito
+let resultadosBusqueda = []; // array para almacenar resultados de búsqueda
 
 //todos los productos en venta - array
 const arrayProductos = {
@@ -25,7 +27,7 @@ const arrayProductos = {
       descripcion:
         "intel core i7, 16gb ram ddr4, video 12gb, ssd 1tb m2, pantalla 15.5",
       precio: 600000.0,
-      foto: "https://th.bing.com/th/id/R.9d4cf11d97900f273009cd9d348b4144?rik=BtA19RX%2bzd8DDA&pid=ImgRaw&r=0",
+      foto: "https://www.lenovo.com/medias/lenovo-gaming-legion-slim-7i-gen-7-16-intel-series.png?context=bWFzdGVyfHJvb3R8NTEyOTM2fGltYWdlL3BuZ3xoM2MvaDY4LzE0MzMyNjQ2MTk1MjMwLnBuZ3xjMDZlNzEyY2RiODg5MDUyYWQ0YTBkNTEwY2E2ZmMyMGQ4YTA3YzM3MmY4OGI3NmFiMDQ1ZmRhYTliY2IzMzIz",
       cantidad: 1,
     },
     {
@@ -128,7 +130,6 @@ document.querySelectorAll(".botonAgregarCarrito").forEach((boton, index) => {
       style: {
         background: "linear-gradient(to right, #00b09b, #172940)",
       },
-      onClick: function () {}, // Callback after click
     }).showToast();
     agregarAlCarrito(arrayProductos.articulos[index]); // función declarada debajo. index=indice del boton seleccionado según el array de todos los productos
   });
@@ -156,8 +157,8 @@ function guardarCarritoEnLocalStorage() {
   localStorage.setItem("carrito", JSON.stringify(carrito));
   console.log("Carrito guardado en localStorage:", carrito);
 }
-
 const carritoGuardado = localStorage.getItem("carrito");
+
 // Función para cargar el carrito desde el localStorage
 function cargarCarritoDesdeLocalStorage() {
   if (carritoGuardado !== null) {
@@ -207,7 +208,6 @@ function renderizarCarrito() {
     carritoHTML.appendChild(renderCarrito);
   });
 
-  vaciarCarrito.style.display = "block";
   // Actualizar el total del carrito en el HTML
   const totalCarrito = document.createElement("div");
   totalCarrito.classList.add("card");
@@ -219,6 +219,7 @@ function renderizarCarrito() {
   `;
   carritoHTML.appendChild(totalCarrito);
   guardarCarritoEnLocalStorage();
+  numeroCantidadCarrito.textContent = `${carrito.length}`;
 } //Fin renderizar carrito
 
 // EVENTO PARA BOTON COMPRAR CARRITO"
@@ -235,35 +236,36 @@ comprarCarrito.addEventListener("click", () => {
     console.log(carrito);
     localStorage.removeItem("carrito");
     carritoHTML.innerHTML = "";
+    numeroCantidadCarrito.textContent = `${carrito.length}`;
   }
 });
 
 //CODIGO DE BUSQUEDA
-buscar.addEventListener("click", function (e) {
+buscar.addEventListener("click", (e) => {
   e.preventDefault();
 
-  const palabraClave = formBusqueda.value.toString();
+  const palabraClave = formBusqueda.value.trim().toLowerCase();
   console.log(palabraClave);
 
-  // Filtrar articulos que coinciden con la palabra clave
-  const articulosCoincidentes = arrayProductos.articulos.filter(function (
-    articulo
-  ) {
-    const articulos = Object.values(articulo);
-    return articulos.some(function (valor) {
-      return valor.toString().includes(palabraClave);
-    });
+  const articulosCoincidentes = arrayProductos.articulos.filter((articulo) => {
+    const valores = Object.values(articulo).map((valor) =>
+      valor.toString().toLowerCase()
+    );
+    return valores.some((valor) => valor.includes(palabraClave));
   });
+
+  resultadosBusqueda = articulosCoincidentes;
+
   console.log(articulosCoincidentes);
 
   // Mostrar los resultados en la página HTML
   const divResultados = document.querySelector("#resultados");
-  if (articulosCoincidentes.length === 0) {
-    divResultados.innerHTML = "No se encontraron productos";
+  if (resultadosBusqueda.length === 0) {
+    divResultados.textContent = "No se encontraron productos";
   } else {
-    let resultadosHTML = "";
-    articulosCoincidentes.forEach(function (articulo) {
-      resultadosHTML += `
+    const resultadosHTML = resultadosBusqueda
+      .map(
+        (articulo) => `
       <div class="containerResultado">
         <img src="${articulo.foto}"/>
         <br>
@@ -272,18 +274,61 @@ buscar.addEventListener("click", function (e) {
         <p>${articulo.descripcion}</p>
         <br>
         <p class="precioProducto">$${articulo.precio}</p>
-        <button id="${articulo.id}" class="botonAgregarCarrito">Agregar al carrito</button>
+        <button id="${articulo.id}" class="botonAgregarCarrito busqueda">Agregar al carrito</button>
         <br>
         <br>
       </div>
-      `;
-    });
+    `
+      )
+      .join("");
 
     divResultados.innerHTML = resultadosHTML;
-
-    // Mostrar resultados en la consola
-    console.table(articulosCoincidentes);
   }
+
+  //agregar articulos al carrito
+  document.querySelectorAll(".busqueda").forEach((boton, index) => {
+    // EVENTO PARA CADA BOTON "AGREGAR AL CARRITO"
+    boton.addEventListener("click", () => {
+      Toastify({
+        text: "Producto agregado al carrito",
+        duration: 3000,
+        destination: "#articulosEnCarrito",
+        newWindow: false,
+        close: true,
+        gravity: "top", // `top` or `bottom`
+        position: "right", // `left`, `center` or `right`
+        stopOnFocus: true, // Prevents dismissing of toast on hover
+        style: {
+          background: "linear-gradient(to right, #00b09b, #172940)",
+        },
+      }).showToast();
+      agregarAlCarrito(resultadosBusqueda[index]); // función declarada debajo. index=indice del boton seleccionado según el array de todos los productos
+    });
+
+    function agregarAlCarrito(articulo) {
+      // se llama al hacer click en agregar al carrito
+      if (carrito.some((item) => item.id === articulo.id)) {
+        // Verificar si el artículo ya existe en el carrito
+        carrito.forEach((item) => {
+          if (item.id === articulo.id) {
+            item.cantidad++; // Incrementar la cantidad si el artículo ya existe
+          }
+        });
+      } else {
+        carrito.push(articulo); // Agregar al array del carrito el producto correspondiente al que se acaba de hacer click
+      }
+
+      console.log(carrito); //testing purposes
+      renderizarCarrito();
+    }
+  });
+});
+
+// Cargar el carrito desde el localStorage al cargar la página
+window.addEventListener("DOMContentLoaded", () => {
+  console.log("DOMContentLoaded");
+  cargarCarritoDesdeLocalStorage();
+  renderizarCarrito();
 });
 
 //evento botón vaciar el carrito
@@ -297,53 +342,17 @@ vaciarCarrito.addEventListener("click", function () {
     // Actualizar el contenido del div "articulosEnCarrito"
     swal("Carrito vaciado", "Vuelve a añadir productos", "warning");
     carritoHTML.innerHTML = "";
+    numeroCantidadCarrito.textContent = `${carrito.length}`;
   }
 });
 
-// Cargar el carrito desde el localStorage al cargar la página
-window.addEventListener("DOMContentLoaded", () => {
-  console.log("DOMContentLoaded");
-  cargarCarritoDesdeLocalStorage();
-  renderizarCarrito();
-});
-
-// //elimina articulos del carrito
-// document.querySelectorAll(".eliminarArticulo").forEach((a, index) => {
-//   // EVENTO PARA CADA BOTON "AGREGAR AL CARRITO"
-//   a.addEventListener("click", (event) => {
-//     event.preventDefault(), borrarDelCarrito(arrayProductos.articulos[index]); // función declarada debajo. index=indice del boton seleccionado según el array de todos los productos
-//   });
-
-//   function borrarDelCarrito(articulo) {
-//     // se llama al hacer click en agregar al carrito
-//     if (carrito.some((item) => item.id === articulo.id)) {
-//       // Verificar si el artículo ya existe en el carrito
-//       carrito.forEach((item) => {
-//         if (item.id === articulo.id) {
-//           item.cantidad--; // Disminuye la cantidad si el artículo ya existe
-//         }
-//       });
-//     } else {
-//       carrito.splice(articulo); // borrar del array del carrito el producto correspondiente al que se acaba de hacer click
-//     }
-
-//     console.log(carrito); //testing purposes
-//     renderizarCarrito();
-//   }
-// });
-
-
-
-carritoHTML.addEventListener("click", eliminarProducto);
-
 // Eliminar productos del carrito
+carritoHTML.addEventListener("click", eliminarProducto);
 
 function eliminarProducto(e) {
   if (e.target.classList.contains("btn-danger")) {
     let articuloID = e.target.getAttribute("id");
-    carrito = carrito.filter(
-      (articulo) => articulo.id !== articuloID
-    );
+    carrito = carrito.filter((articulo) => articulo.id !== articuloID);
     console.log(carrito); //testing purposes
     renderizarCarrito();
   }
