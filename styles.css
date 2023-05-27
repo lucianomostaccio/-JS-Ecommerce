@@ -54,6 +54,17 @@ nav ul a {
   text-decoration: none;
 }
 
+#limpiarBusquedaBtn {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  display: none;
+}
+
+#limpiarBusquedaDiv {
+  display: flex;
+  justify-content: center;
+}
+
 .product-list {
   background-color: #eee;
   padding: 1rem;
@@ -75,7 +86,6 @@ nav ul a {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   padding: 3rem;
   text-align: center;
-  margin-right: 1rem;
   margin-bottom: 1rem;
   width: 25rem;
 }
@@ -112,10 +122,14 @@ nav ul a {
   cursor: pointer;
 }
 
+#principalProductos {
+  padding: 0;
+}
+
 #resultados {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-evenly;
   flex-direction: row;
   align-items: center;
   max-width: 100%;
@@ -142,7 +156,6 @@ nav ul a {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   padding: 3rem;
   text-align: center;
-  margin-right: 1rem;
   margin-bottom: 1rem;
   border: solid blue 1px;
   max-width: 26rem;
@@ -236,9 +249,17 @@ footer {
   margin: 0 auto;
 }
 
+.carritoNav {
+  list-style: none;
+  margin-left: 1rem;
+}
+
 @media (width < 992px) {
   .carritoNav {
-    list-style: none;
+    margin-left: 0;
+  }
+  .navbar-brand {
+    display: block;
   }
 }
 

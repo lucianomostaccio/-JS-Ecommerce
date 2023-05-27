@@ -1,10 +1,11 @@
 const listaProductos = document.querySelector("#principalProductos"); //sección donde van los articulos en el home
 const carritoHTML = document.querySelector("#articulosEnCarrito"); //sección donde van los artículos en el carrito
 const buscar = document.querySelector("#buscarBtn"); // botón buscar
-const formBusqueda = document.querySelector("#busqueda");
+const formBusqueda = document.querySelector("#busqueda"); //campo de entrada para búsqueda
+const botonLimpiarBusqueda = document.querySelector("#limpiarBusquedaBtn"); //botón para limpiar resultados de búsqueda
 const vaciarCarrito = document.querySelector("#vaciarCart"); // boton vaciar carrito
-const vaciarComprarDiv = document.querySelector(".vaciarComprarDiv");
-const comprarCarrito = document.querySelector("#comprarCarrito");
+// const vaciarComprarDiv = document.querySelector(".vaciarComprarDiv");
+const comprarCarrito = document.querySelector("#comprarCarrito"); //boton comprar el carrito
 let totalCarritoSuma = 0; // Inicializo variable para almacenar el total del carrito
 const numeroCantidadCarrito = document.querySelector("#cantidadCarrito");
 let carrito = []; // array para almacenar productos en el carrito
@@ -255,8 +256,7 @@ buscar.addEventListener("click", (e) => {
   });
 
   resultadosBusqueda = articulosCoincidentes;
-
-  console.log(articulosCoincidentes);
+  console.log("array resultados de búsqueda=",resultadosBusqueda);
 
   // Mostrar los resultados en la página HTML
   const divResultados = document.querySelector("#resultados");
@@ -283,7 +283,15 @@ buscar.addEventListener("click", (e) => {
       .join("");
 
     divResultados.innerHTML = resultadosHTML;
+    botonLimpiarBusqueda.style.display="block";
   }
+  //evento botón limpiar resultados de búsqueda
+  botonLimpiarBusqueda.addEventListener("click",() => {
+    divResultados.innerHTML =""; //limpia el html
+    resultadosBusqueda.length = 0; //limpia array resultados de búsqueda
+    console.log("array resultados de búsqueda:",resultadosBusqueda); //testing
+    botonLimpiarBusqueda.style.display="none"; //vuelve a ocultar el botón
+  })
 
   //agregar articulos al carrito
   document.querySelectorAll(".busqueda").forEach((boton, index) => {
@@ -322,7 +330,10 @@ buscar.addEventListener("click", (e) => {
       renderizarCarrito();
     }
   });
+  formBusqueda.value = '';
 });
+
+
 
 // Cargar el carrito desde el localStorage al cargar la página
 window.addEventListener("DOMContentLoaded", () => {
