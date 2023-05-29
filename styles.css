@@ -111,6 +111,11 @@ nav ul a {
   font-size: 1.1rem;
 }
 
+.precioProductoBusqueda {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
 .product-list li button {
   display: block;
   margin: 1rem auto 0;
@@ -149,6 +154,7 @@ nav ul a {
   padding: 0.5rem 1rem;
   font-size: 1rem;
   cursor: pointer;
+  margin-top: 2rem;
 }
 
 .containerResultado {
