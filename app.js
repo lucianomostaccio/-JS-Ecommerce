@@ -29,8 +29,12 @@ fetch("/productos.json")
                 <img src="${articulo.foto}"/>
                 <h3 class="nombreProducto">${articulo.nombre}</h3> 
                 <p>${articulo.descripcion}</p>
-                <p class="precioProducto">$${articulo.precio}</p>
-                <button id="${articulo.id}" class="botonAgregarCarrito">Agregar al carrito</button>
+                <p class="precioProducto">$${articulo.precio.toLocaleString(
+                  "es-AR"
+                )}</p>
+                <button id="${
+                  articulo.id
+                }" class="botonAgregarCarrito">Agregar al carrito</button>
       `;
       listaProductos.appendChild(articuloHTML); //agregar cada uno de los div creados en listaProductos que es la sección del home
     });
@@ -111,8 +115,12 @@ fetch("/productos.json")
             <br>
             <p>${articulo.descripcion}</p>
             <br>
-            <p class="precioProductoBusqueda">$${articulo.precio}</p>
-            <button id="${articulo.id}" class="botonAgregarCarrito busqueda">Agregar al carrito</button>
+            <p class="precioProductoBusqueda">$${articulo.precio.toLocaleString(
+              "es-AR"
+            )}</p>
+            <button id="${
+              articulo.id
+            }" class="botonAgregarCarrito busqueda">Agregar al carrito</button>
             <br>
             <br>
           </div>
@@ -230,20 +238,28 @@ function renderizarCarrito() {
               <div class="card-body p-4">
                   <div class="row d-flex justify-content-between align-items-center ">
                     <div class="col-md-2 col-lg-2 col-xl-2">
-                      <img src="${articulo.foto}" class="img-fluid rounded-3" alt="Cotton T-shirt">
+                      <img src="${
+                        articulo.foto
+                      }" class="img-fluid rounded-3" alt="Cotton T-shirt">
                     </div>
                     <div class="col-md-3 col-lg-3 col-xl-3">
-                      <p id="nombreArticulo" class="lead fw-normal mb-2">${articulo.nombre}</p>
+                      <p id="nombreArticulo" class="lead fw-normal mb-2">${
+                        articulo.nombre
+                      }</p>
                       <p class="lead fw-normal mb-2">${articulo.descripcion}</p>
                     </div>
                     <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
                       <h5 class="mb-0">Cantidad: ${articulo.cantidad}</h5>
                     </div>  
                     <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                      <h5 class="mb-0">$${totalArticulo}</h5>
+                      <h5 class="mb-0">$${totalArticulo.toLocaleString(
+                        "es-AR"
+                      )}</h5>
                     </div>
                     <div class="col-md-1 col-lg-2 col-xl-2 text-end">
-                      <button class="btn btn-danger quitar" id="${articulo.id}">Eliminar</button>
+                      <button class="btn btn-danger quitar" id="${
+                        articulo.id
+                      }">Eliminar</button>
                     </div>
                   </div>
                 </div>
@@ -258,7 +274,9 @@ function renderizarCarrito() {
   totalCarrito.classList.add("mb-4");
   totalCarrito.classList.add("card-body");
   totalCarrito.innerHTML = `
-      <h5 id="totalCarrito" class="mb-0">TOTAL CARRITO $${totalCarritoSuma}
+      <h5 id="totalCarrito" class="mb-0">TOTAL CARRITO $${totalCarritoSuma.toLocaleString(
+        "es-AR"
+      )}
       `;
   carritoHTML.appendChild(totalCarrito);
   numeroCantidadCarrito.textContent = `${carrito.length}`;
