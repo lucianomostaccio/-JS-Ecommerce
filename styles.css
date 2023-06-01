@@ -219,6 +219,14 @@ nav ul a {
   display: none;
 }
 
+.aumentarUnidad{
+  padding:1rem;
+}
+
+.disminuirUnidad{
+  padding:1rem;
+}
+
 #nombreArticulo {
   font-weight: bolder !important;
 }
@@ -266,6 +274,10 @@ footer {
   }
   .navbar-brand {
     display: block;
+  }
+
+  #divCantidad{
+    flex-wrap: wrap !important;
   }
 }
 

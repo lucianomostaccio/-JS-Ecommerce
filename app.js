@@ -40,7 +40,6 @@ fetch("/productos.json")
     });
 
     //agregar articulos al carrito
-    //agregar articulos al carrito
     document
       .querySelectorAll(".botonAgregarCarrito")
       .forEach((boton, index) => {
@@ -236,7 +235,7 @@ function renderizarCarrito() {
     renderCarrito.classList.add("mb-4");
     renderCarrito.innerHTML = `
               <div class="card-body p-4">
-                  <div class="row d-flex justify-content-between align-items-center ">
+                  <div class="row d-flex justify-content-between align-items-center" id="tarjetaCarrito">
                     <div class="col-md-2 col-lg-2 col-xl-2">
                       <img src="${
                         articulo.foto
@@ -248,8 +247,14 @@ function renderizarCarrito() {
                       }</p>
                       <p class="lead fw-normal mb-2">${articulo.descripcion}</p>
                     </div>
-                    <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                    <div class="col-md-3 col-lg-3 col-xl-2 d-flex" id="divCantidad">
                       <h5 class="mb-0">Cantidad: ${articulo.cantidad}</h5>
+                      <button class="btn btn-sm btn-primary ms-2 aumentarUnidad" data-articulo-id="${
+                        articulo.id
+                      }">+</button>
+                      <button class="btn btn-sm btn-primary ms-2 disminuirUnidad" data-articulo-id="${
+                        articulo.id
+                      }">-</button>
                     </div>  
                     <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
                       <h5 class="mb-0">$${totalArticulo.toLocaleString(
@@ -282,6 +287,28 @@ function renderizarCarrito() {
   numeroCantidadCarrito.textContent = `${carrito.length}`;
   guardarCarritoEnLocalStorage();
 } //Fin renderizar carrito
+
+// Evento para los botones de flecha arriba
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("aumentarUnidad")) {
+    const articuloID = e.target.dataset.articuloId;
+    console.log("Cantidad de articulo aumentada");
+    const articulo = carrito.find((articulo) => articulo.id === articuloID);
+    articulo && articulo.cantidad++;
+    renderizarCarrito();
+  }
+});
+
+// Evento para los botones de flecha abajo
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("disminuirUnidad")) {
+    const articuloID = e.target.dataset.articuloId;
+    console.log("Cantidad de artículo disminuída");
+    const articulo = carrito.find((articulo) => articulo.id === articuloID);
+    articulo && articulo.cantidad > 1 && articulo.cantidad--;
+    renderizarCarrito();
+  }
+});
 
 // EVENTO PARA BOTON COMPRAR CARRITO"
 comprarCarrito.addEventListener("click", () => {
