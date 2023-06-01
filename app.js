@@ -153,7 +153,9 @@ fetch("/productos.json")
 
         function agregarAlCarrito(articulo) {
           // se llama al hacer click en agregar al carrito
-          const existeArticulo = carrito.some((item) => item.id === articulo.id);
+          const existeArticulo = carrito.some(
+            (item) => item.id === articulo.id
+          );
           existeArticulo
             ? carrito.forEach((item) => {
                 if (item.id === articulo.id) {
