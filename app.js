@@ -311,10 +311,8 @@ const carritoGuardado = localStorage.getItem("carrito");
 // Función para cargar el carrito desde el localStorage
 function cargarCarritoDesdeLocalStorage() {
   console.log("Contenido de carrito previamente guardado:", carritoGuardado);
-  if (carritoGuardado !== null) {
-    carrito = JSON.parse(carritoGuardado);
-    console.log("Carrito cargado desde localStorage:", carrito);
-  }
+  carrito = carritoGuardado !== null ? JSON.parse(carritoGuardado) : [];
+  console.log("Carrito cargado desde localStorage:", carrito);
 }
 
 // Cargar el carrito desde el localStorage al cargar la página
