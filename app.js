@@ -12,7 +12,7 @@ let resultadosBusqueda = []; // array para almacenar resultados de búsqueda
 
 let arrayProductos; // Variable global para almacenar los productos
 
-fetch("/arrays.json")
+fetch("/productos.json")
   .then((response) => response.json())
   .then((data) => {
     console.log("Solo se han leido los productos desde el JSON:", data);
@@ -36,6 +36,7 @@ fetch("/arrays.json")
     });
 
     //agregar articulos al carrito
+    //agregar articulos al carrito
     document
       .querySelectorAll(".botonAgregarCarrito")
       .forEach((boton, index) => {
@@ -56,27 +57,25 @@ fetch("/arrays.json")
           }).showToast();
           agregarAlCarrito(arrayProductos.articulos[index]); // función declarada debajo
         });
-
-        function agregarAlCarrito(articulo) {
-          // se llama al hacer click en agregar al carrito
-          if (carrito.some((item) => item.id === articulo.id)) {
-            // Verificar si el artículo ya existe en el carrito
-            carrito.forEach((item) => {
-              if (item.id === articulo.id) {
-                item.cantidad++; // Incrementar la cantidad si el artículo ya existe
-              }
-            });
-          } else {
-            carrito.push(articulo); // Agregar al array del carrito el producto correspondiente al que se acaba de hacer click
-          }
-
-          console.log(
-            "Producto agregado. Carrito ahora tiene los siguiente productos:",
-            carrito
-          );
-          renderizarCarrito();
-        }
       });
+
+    function agregarAlCarrito(articulo) {
+      // se llama al hacer click en agregar al carrito
+      const existeArticulo = carrito.some((item) => item.id === articulo.id);
+      existeArticulo
+        ? carrito.forEach((item) => {
+            if (item.id === articulo.id) {
+              item.cantidad++; // Incrementar la cantidad si el artículo ya existe
+            }
+          })
+        : carrito.push(articulo); // Agregar al array del carrito el producto correspondiente al que se acaba de hacer click
+
+      console.log(
+        "Producto agregado. Carrito ahora tiene los siguiente productos:",
+        carrito
+      );
+      renderizarCarrito();
+    }
 
     //CODIGO DE BUSQUEDA
     buscar.addEventListener("click", (e) => {
@@ -132,7 +131,7 @@ fetch("/arrays.json")
         botonLimpiarBusqueda.style.display = "none"; //vuelve a ocultar el botón
       });
 
-      //agregar articulos al carrito
+      //agregar articulos de búsqueda al carrito
       document.querySelectorAll(".busqueda").forEach((boton, index) => {
         // EVENTO PARA CADA BOTON "AGREGAR AL CARRITO"
         boton.addEventListener("click", () => {
@@ -154,16 +153,14 @@ fetch("/arrays.json")
 
         function agregarAlCarrito(articulo) {
           // se llama al hacer click en agregar al carrito
-          if (carrito.some((item) => item.id === articulo.id)) {
-            // Verificar si el artículo ya existe en el carrito
-            carrito.forEach((item) => {
-              if (item.id === articulo.id) {
-                item.cantidad++; // Incrementar la cantidad si el artículo ya existe
-              }
-            });
-          } else {
-            carrito.push(articulo); // Agregar al array del carrito el producto correspondiente al que se acaba de hacer click
-          }
+          const existeArticulo = carrito.some((item) => item.id === articulo.id);
+          existeArticulo
+            ? carrito.forEach((item) => {
+                if (item.id === articulo.id) {
+                  item.cantidad++; // Incrementar la cantidad si el artículo ya existe
+                }
+              })
+            : carrito.push(articulo); // Agregar al array del carrito el producto correspondiente al que se acaba de hacer click
 
           console.log(
             "Producto de resultado de búsqueda agregado. Carrito ahora tiene los siguiente productos:",
@@ -174,6 +171,7 @@ fetch("/arrays.json")
       });
       formBusqueda.value = "";
     });
+    //FIN CÓDIGO BÚSQUEDA
 
     //evento botón vaciar el carrito
     vaciarCarrito.addEventListener("click", function () {
@@ -183,37 +181,34 @@ fetch("/arrays.json")
         // Vaciar el array "carrito"
         carrito.splice(0, carrito.length);
         localStorage.removeItem("carrito");
-        // Actualizar el contenido del div "articulosEnCarrito"
         swal("Carrito vaciado", "Vuelve a añadir productos", "warning");
-        carritoHTML.innerHTML = "";
         numeroCantidadCarrito.textContent = `${carrito.length}`;
         console.log("Carrito vaciado. Verifique esté vacío:", carrito);
+
+        renderizarCarrito();
       }
     });
 
-    // Eliminar productos del carrito
+    // Eliminar productos individualmente del carrito
     carritoHTML.addEventListener("click", eliminarProducto);
 
     function eliminarProducto(e) {
       if (e.target.classList.contains("btn-danger")) {
         let articuloID = e.target.getAttribute("id");
-        // Buscar el índice del artículo en el carrito
-        let indice = carrito.findIndex(
-          (articulo) => articulo.id === articuloID
-        );
-        // Eliminar el elemento por su índice
-        carrito.splice(indice, 1);
+        let articulo = carrito.find((articulo) => articulo.id === articuloID);
+        articulo.cantidad = 1; //restablezco cantidad por si se vuelve agregar un articulo que fue eliminado
+        carrito = carrito.filter((articulo) => articulo.id !== articuloID);
         console.log(
           "Producto eliminado. Carrito ahora tiene los siguiente productos:",
           carrito
-        ); //testing purposes
+        );
         renderizarCarrito();
       }
     }
   })
   .catch((error) => console.log("error al cargar el json de productos", error));
 
-// Función para renderizar los productos en el carrito en el HTML
+// Función global para renderizar los productos en el carrito en el HTML
 function renderizarCarrito() {
   carritoHTML.innerHTML = ""; //limpiar el carrito inicial en el HTML
 
@@ -295,7 +290,7 @@ const carritoGuardado = localStorage.getItem("carrito");
 
 // Función para cargar el carrito desde el localStorage
 function cargarCarritoDesdeLocalStorage() {
-  console.log("Contenido de carrito guardado:", carritoGuardado);
+  console.log("Contenido de carrito previamente guardado:", carritoGuardado);
   if (carritoGuardado !== null) {
     carrito = JSON.parse(carritoGuardado);
     console.log("Carrito cargado desde localStorage:", carrito);
@@ -308,92 +303,3 @@ window.addEventListener("DOMContentLoaded", () => {
   cargarCarritoDesdeLocalStorage();
   renderizarCarrito();
 });
-
-//viejo array antes de JSON:
-//   articulos: [
-//     {
-//       id: "dell-1",
-//       nombre: "Notebook Dell oficina",
-//       descripcion: "intel core i5, 16gb ram ddr4, ssd 512gb m2, pantalla 15.5",
-//       precio: 250000.0,
-//       foto: "https://th.bing.com/th/id/R.d25b1a49a9fafbf23a6373e0c47e45ff?rik=VbUNfUCprHYtyQ&riu=http%3a%2f%2fi.mlcdn.com.br%2f1500x1500%2fnotebook-dell-inspiron-3000-i15-3542-a30c-intel-core-i5-4gb-1tb-windows-8.1-led-15-6-hdmi-135223000.jpg&ehk=oKyjUP30L6M9X%2bUwsnsmIsQhRMgmHNK42Q%2fP0c0of58%3d&risl=&pid=ImgRaw&r=0",
-//       cantidad: 1,
-//     },
-//     {
-//       id: "lenovo-1",
-//       nombre: "Notebook Lenovo gamer",
-//       descripcion:
-//         "intel core i7, 16gb ram ddr4, video 12gb, ssd 1tb m2, pantalla 15.5",
-//       precio: 600000.0,
-//       foto: "https://www.lenovo.com/medias/lenovo-gaming-legion-slim-7i-gen-7-16-intel-series.png?context=bWFzdGVyfHJvb3R8NTEyOTM2fGltYWdlL3BuZ3xoM2MvaDY4LzE0MzMyNjQ2MTk1MjMwLnBuZ3xjMDZlNzEyY2RiODg5MDUyYWQ0YTBkNTEwY2E2ZmMyMGQ4YTA3YzM3MmY4OGI3NmFiMDQ1ZmRhYTliY2IzMzIz",
-//       cantidad: 1,
-//     },
-//     {
-//       id: "hp-1",
-//       nombre: "Notebook HP basica",
-//       descripcion: "AMD rizen 3, 8gb ram ddr4, ssd 256gb m2, pantalla 14",
-//       precio: 300000.0,
-//       foto: "https://store.hp.com/CanadaStore/Html/Merch/Images/c05971638_1750x1285.jpg",
-//       cantidad: 1,
-//     },
-//     {
-//       id: "hp-2",
-//       nombre: "Notebook HP oficina",
-//       descripcion: "AMD rizen 5, 16gb ram ddr4, ssd 512gb m2, pantalla 14",
-//       precio: 350000.0,
-//       foto: "https://store.hp.com/CanadaStore/Html/Merch/Images/c05971638_1750x1285.jpg",
-//       cantidad: 1,
-//     },
-//     {
-//       id: "dell-2",
-//       nombre: "Notebook Dell gamer",
-//       descripcion:
-//         "intel core i7, 32gb ram ddr4, video 12gb, ssd 1tb m2, pantalla 17",
-//       precio: 800000.0,
-//       foto: "https://th.bing.com/th/id/R.acbdd69b5caed96b52a37352861fb99b?rik=7Q2TK%2bzXFYGoHw&pid=ImgRaw&r=0",
-//       cantidad: 1,
-//     },
-//     {
-//       id: "lenovo-2",
-//       nombre: "Notebook Lenovo básica",
-//       descripcion: "intel core i3, 16gb ram ddr4, ssd 256 m2, pantalla 14",
-//       precio: 300000.0,
-//       foto: "https://th.bing.com/th/id/R.fa2670eadf67a928429c276d5be1d4b7?rik=2IHEEO9s66VzBQ&pid=ImgRaw&r=0",
-//       cantidad: 1,
-//     },
-//     {
-//       id: "hp-3",
-//       nombre: "Notebook HP gamer",
-//       descripcion:
-//         "AMD rizen 7, 32gb ram ddr4, video 8gb, ssd 512gb m2, pantalla 15",
-//       precio: 500000.0,
-//       foto: "https://th.bing.com/th/id/OIP.684NQNblvIajTSKMQtxlWgHaFK?pid=ImgDet&rs=1",
-//       cantidad: 1,
-//     },
-//     {
-//       id: "asus-1",
-//       nombre: "Notebook Asus gamer",
-//       descripcion:
-//         "AMD rizen 7, 32gb ram ddr4, video 12gb, ssd 1tb m2, pantalla 17",
-//       precio: 900000.0,
-//       foto: "https://th.bing.com/th/id/OIP.-SrTYrvYX2FztybvXAbgWwHaFj?pid=ImgDet&rs=1",
-//       cantidad: 1,
-//     },
-//     {
-//       id: "lenovo-3",
-//       nombre: "Notebook Lenovo oficina",
-//       descripcion: "AMD rizen 5, 16gb ram ddr4, ssd 512gb m2, pantalla 14",
-//       precio: 350000.0,
-//       foto: "https://th.bing.com/th/id/R.fa2670eadf67a928429c276d5be1d4b7?rik=2IHEEO9s66VzBQ&pid=ImgRaw&r=0",
-//       cantidad: 1,
-//     },
-//     {
-//       id: "asus-2",
-//       nombre: "Notebook Asus oficina",
-//       descripcion: "intel core i5, 32gb ram ddr4, ssd 512 m2, pantalla 15",
-//       precio: 450000.0,
-//       foto: "https://th.bing.com/th/id/R.bf214b856a9c0a6bdd6a8607f13bd7b9?rik=whhJp1uhysp5tg&riu=http%3a%2f%2fwww.bhphotovideo.com%2fimages%2fimages2000x2000%2fasus_1225b_su17_bk_eee_1225b_su17_bk_11_6_netbook_844671.jpg&ehk=RJ0fD8clIQoN2HDMfUZdy%2fRh90jiNeu46lwLNBVJdxU%3d&risl=&pid=ImgRaw&r=0",
-//       cantidad: 1,
-//     },
-//   ],
-// };
